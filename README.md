@@ -19,6 +19,7 @@ package com.example;
 
 import com.github.jh3nd3rs0n.seeessvee.CsvFileReader;
 import com.github.jh3nd3rs0n.seeessvee.CsvFileWriter;
+import com.github.jh3nd3rs0n.seeessvee.Field;
 
 import java.io.File;
 import java.io.FileReader;
@@ -35,16 +36,21 @@ public class App {
         FileWriter fileWriter = new FileWriter(file);
         try {
             CsvFileWriter csvFileWriter = new CsvFileWriter(fileWriter);
-            csvFileWriter.writeRecord("Last Name", "First Name", "Salary");
-            csvFileWriter.writeRecord("Doe", "Jane", "120,000");
-            csvFileWriter.writeRecord("Doe", "John", "120,000");
+            csvFileWriter.writeRecordWithStringsToBeEscaped(
+                "Last Name", "First Name", "Salary");
+            csvFileWriter.writeRecordWithStrings(
+                "Doe", "Jane", "120,000");
+            csvFileWriter.writeRecord(
+                Field.newInstance("Doe"), 
+                Field.newInstance("John"), 
+                Field.newEscapedInstance("120,000"));
         } finally {
             fileWriter.close();
         }
         /*
          * payroll.csv:
          * 
-         * Last Name,First Name,Salary
+         * "Last Name","First Name","Salary"
          * Doe,Jane,"120,000"
          * Doe,John,"120,000"
          *
@@ -53,12 +59,17 @@ public class App {
         try {
             CsvFileReader csvFileReader = new CsvFileReader(fileReader);
             List<String> csvRecord = csvFileReader.readRecord();
-            System.out.printf("%s, %s, %s%n", csvRecord.get(0), csvRecord.get(1), csvRecord.get(2));
+            System.out.printf(
+                "\"%s\", \"%s\", \"%s\"%n", 
+                csvRecord.get(0), 
+                csvRecord.get(1), 
+                csvRecord.get(2));
             while ((csvRecord = csvFileReader.readRecord()).size() > 0) {
-                String lastNameField = csvRecord.get(0);
-                String firstNameField = csvRecord.get(1);
-                String salaryField = csvRecord.get(2);
-                System.out.printf("%s, %s, %s%n", lastNameField, firstNameField, salaryField);
+                System.out.printf(
+                    "%s, %s, %s%n", 
+                    csvRecord.get(0), 
+                    csvRecord.get(1), 
+                    csvRecord.get(2));
             }
         } finally {
             fileReader.close();
@@ -66,7 +77,7 @@ public class App {
         /*
          * Standard output:
          *
-         * Last Name, First Name, Salary
+         * "Last Name", "First Name", "Salary"
          * Doe, Jane, 120,000
          * Doe, John, 120,000
          *
@@ -77,7 +88,7 @@ public class App {
 ```
 
 SeeEssVee follows the standard set out in 
-[RFC 4180](https://www.rfc-editor.org/rfc/rfc4180) with a few additions:
+[RFC 4180](https://www.rfc-editor.org/rfc/rfc4180) with a few differences:
 
 -   Line breaks can also be just the line feed character
 
@@ -88,9 +99,6 @@ comma characters, carriage return characters, or line feed characters do not
 need to be enclosed in double quote characters
 
 -   CSV records within a file do not have to have the same number of fields
-
--   Fields in a CSV record that do not have any special characters do not have 
-to be enclosed in double quote characters
 
 ## License
 

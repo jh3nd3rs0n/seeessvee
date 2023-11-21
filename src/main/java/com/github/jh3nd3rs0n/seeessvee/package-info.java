@@ -1,6 +1,6 @@
 /**
  * Provides classes for reading and writing CSV files. The classes follows the 
- * standard set out in RFC 4180 with a few additions:
+ * standard set out in RFC 4180 with a few differences:
  * 
  * <ul>
  * <li>Line breaks can also be just the line feed character.</li>
@@ -10,8 +10,6 @@
  * need to be enclosed in double quote characters.</li>
  * <li>CSV records within a file do not have to have the same number of fields.
  * </li>
- * <li>Fields in a CSV record that do not have any special characters do not 
- * have to be enclosed in double quote characters.</li>
  * </ul> 
  */
 package com.github.jh3nd3rs0n.seeessvee;
