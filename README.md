@@ -36,9 +36,9 @@ public class App {
         FileWriter fileWriter = new FileWriter(file);
         try {
             CsvFileWriter csvFileWriter = new CsvFileWriter(fileWriter);
-            csvFileWriter.writeRecordWithStringsToBeEscaped(
+            csvFileWriter.writeRecordFromStringsToBeEscaped(
                 "Last Name", "First Name", "Salary");
-            csvFileWriter.writeRecordWithStrings(
+            csvFileWriter.writeRecordFromStrings(
                 "Doe", "Jane", "120,000");
             csvFileWriter.writeRecord(
                 Field.newInstance("Doe"), 
