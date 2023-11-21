@@ -19,6 +19,7 @@ package com.example;
 
 import com.github.jh3nd3rs0n.seeessvee.CsvFileReader;
 import com.github.jh3nd3rs0n.seeessvee.CsvFileWriter;
+import com.github.jh3nd3rs0n.seeessvee.EscapeSelection;
 import com.github.jh3nd3rs0n.seeessvee.Field;
 
 import java.io.File;
@@ -36,10 +37,16 @@ public class App {
         FileWriter fileWriter = new FileWriter(file);
         try {
             CsvFileWriter csvFileWriter = new CsvFileWriter(fileWriter);
-            csvFileWriter.writeRecordFromStringsToBeEscaped(
-                "Last Name", "First Name", "Salary");
-            csvFileWriter.writeRecordFromStrings(
-                "Doe", "Jane", "120,000");
+            csvFileWriter.writeRecord(
+                EscapeSelection.ESCAPE_ALL,
+                "Last Name", 
+                "First Name", 
+                "Salary");
+            csvFileWriter.writeRecord(
+                EscapeSelection.ESCAPE_REQUIRED,
+                "Doe", 
+                "Jane", 
+                "120,000");
             csvFileWriter.writeRecord(
                 Field.newInstance("Doe"), 
                 Field.newInstance("John"), 

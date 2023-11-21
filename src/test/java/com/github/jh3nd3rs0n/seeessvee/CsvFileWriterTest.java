@@ -13,8 +13,8 @@ public class CsvFileWriterTest {
 	public void test() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 		CsvFileWriter csvFileWriter = new CsvFileWriter(stringWriter);
-		csvFileWriter.writeRecordFromStrings("aaa","bbb","ccc");
-		csvFileWriter.writeRecordFromStrings("xxx", "yyy", "zzz");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED,"aaa","bbb", "ccc");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED, "xxx", "yyy", "zzz");
 		String expected = String.format(
 				"aaa,bbb,ccc%n"
 				+ "xxx,yyy,zzz%n");
@@ -26,8 +26,8 @@ public class CsvFileWriterTest {
 	public void testWithEscapedFields() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 		CsvFileWriter csvFileWriter = new CsvFileWriter(stringWriter);
-		csvFileWriter.writeRecordFromStringsToBeEscaped("aaa","bbb","ccc");
-		csvFileWriter.writeRecordFromStrings("xxx", "yyy", "zzz");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_ALL, "aaa","bbb","ccc");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED, "xxx", "yyy", "zzz");
 		String expected = String.format(
 				"\"aaa\",\"bbb\",\"ccc\"%n"
 				+ "xxx,yyy,zzz%n");
@@ -39,8 +39,8 @@ public class CsvFileWriterTest {
 	public void testWithFieldContainingCarriageReturn() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 		CsvFileWriter csvFileWriter = new CsvFileWriter(stringWriter);
-		csvFileWriter.writeRecordFromStrings("aaa","b\rbb","ccc");
-		csvFileWriter.writeRecordFromStrings("xxx", "yyy", "zzz");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED,"aaa","b\rbb", "ccc");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED, "xxx", "yyy", "zzz");
 		String expected = String.format(
 				"aaa,\"b\rbb\",ccc%n"
 				+ "xxx,yyy,zzz%n");
@@ -52,8 +52,8 @@ public class CsvFileWriterTest {
 	public void testWithFieldContainingLineBreak() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 		CsvFileWriter csvFileWriter = new CsvFileWriter(stringWriter);
-		csvFileWriter.writeRecordFromStrings("aaa","b\r\nbb","ccc");
-		csvFileWriter.writeRecordFromStrings("xxx", "yyy", "zzz");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED,"aaa","b\r\nbb", "ccc");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED, "xxx", "yyy", "zzz");
 		String expected = String.format(
 				"aaa,\"b\r\nbb\",ccc%n"
 				+ "xxx,yyy,zzz%n");
@@ -65,8 +65,8 @@ public class CsvFileWriterTest {
 	public void testWithFieldContainingLineFeed() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 		CsvFileWriter csvFileWriter = new CsvFileWriter(stringWriter);
-		csvFileWriter.writeRecordFromStrings("aaa","b\nbb","ccc");
-		csvFileWriter.writeRecordFromStrings("xxx", "yyy", "zzz");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED,"aaa","b\nbb", "ccc");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED, "xxx", "yyy", "zzz");
 		String expected = String.format(
 				"aaa,\"b\nbb\",ccc%n"
 				+ "xxx,yyy,zzz%n");
@@ -78,8 +78,8 @@ public class CsvFileWriterTest {
 	public void testWithFieldWithComma() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 		CsvFileWriter csvFileWriter = new CsvFileWriter(stringWriter);
-		csvFileWriter.writeRecordFromStrings("aaa","b,bb","ccc");
-		csvFileWriter.writeRecordFromStrings("xxx", "yyy", "zzz");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED,"aaa","b,bb", "ccc");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED, "xxx", "yyy", "zzz");
 		String expected = String.format(
 				"aaa,\"b,bb\",ccc%n"
 				+ "xxx,yyy,zzz%n");
@@ -91,8 +91,8 @@ public class CsvFileWriterTest {
 	public void testWithFieldWithDoubleQuote() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 		CsvFileWriter csvFileWriter = new CsvFileWriter(stringWriter);
-		csvFileWriter.writeRecordFromStrings("aaa","b\"bb","ccc");
-		csvFileWriter.writeRecordFromStrings("xxx", "yyy", "zzz");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED,"aaa","b\"bb", "ccc");
+		csvFileWriter.writeRecord(EscapeSelection.ESCAPE_REQUIRED, "xxx", "yyy", "zzz");
 		String expected = String.format(
 				"aaa,\"b\"\"bb\",ccc%n"
 				+ "xxx,yyy,zzz%n");

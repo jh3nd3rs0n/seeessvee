@@ -3,8 +3,8 @@ package com.github.jh3nd3rs0n.seeessvee;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A CSV file writer. 
@@ -47,77 +47,53 @@ public final class CsvFileWriter {
 	 * @throws IOException if an I/O error occurs.
 	 */
 	public void writeRecord(final List<Field> fields) throws IOException {
-		for (Iterator<Field> iterator = fields.iterator(); 
-				iterator.hasNext();) {
-			Field field = iterator.next();
-			this.writer.write(field.toString());
-			if (iterator.hasNext()) {
-				this.writer.write(",");
-			} else {
-				this.writer.write(this.lineSeparator);
-			}
-		}
-		if (fields.size() > 0) {
-			this.writer.flush();
-		}		
+		this.writer.write(fields.stream().map(Field::toString).collect(
+				Collectors.joining(",")));
+		this.writer.write(this.lineSeparator);
+		this.writer.flush();		
 	}
 	
 	/**
 	 * Writes to file the CSV record from a provided {@code List} of fields as 
-	 * {@code String}s. Fields that contain any reserved characters are enclosed 
-	 * in double quote characters and properly escaped if necessary.
+	 * {@code String}s.
+	 * 
+	 * @param escapeSelection the provided {@code EscapeSelection} on the fields
 	 * 
 	 * @param fields a provided {@code List} of fields as {@code String}s
 	 * 
 	 * @throws IOException if an I/O error occurs.
 	 */
-	public void writeRecordFromStrings(
+	public void writeRecord(
+			final EscapeSelection escapeSelection, 
 			final List<String> fields) throws IOException {
-		this.writeRecord(fields.stream().map(Field::newInstance).toList());
+		this.writeRecord(fields.stream().map((field) -> {
+			Field fld = null;
+			switch (escapeSelection) {
+			case ESCAPE_ALL:
+				fld = Field.newEscapedInstance(field);
+				break;
+			case ESCAPE_REQUIRED:
+				fld = Field.newInstance(field);
+				break;
+			}
+			return fld;
+		}).toList());
 	}
 	
 	/**
 	 * Writes to file the CSV record from a provided array of fields as 
-	 * {@code String}s. Fields that contain any reserved characters are enclosed 
-	 * in double quote characters and properly escaped if necessary.
+	 * {@code String}s.
+	 * 
+	 * @param escapeSelection the provided {@code EscapeSelection} on the fields
 	 * 
 	 * @param fields a provided array of fields as {@code String}s
 	 * 
 	 * @throws IOException if an I/O error occurs
 	 */
-	public void writeRecordFromStrings(
+	public void writeRecord(
+			final EscapeSelection escapeSelection, 
 			final String... fields) throws IOException {
-		this.writeRecordFromStrings(Arrays.asList(fields));
+		this.writeRecord(escapeSelection, Arrays.asList(fields));
 	}
- 	
-	/**
-	 * Writes to file the CSV record from a provided {@code List} of fields as 
-	 * {@code String}s to be escaped. Fields that contain any double quote 
-	 * characters are properly escaped.
-	 * 
-	 * @param fields a provided {@code List} of fields as {@code String}s to be 
-	 * escaped
-	 * 
-	 * @throws IOException if an I/O error occurs.
-	 */	
-	public void writeRecordFromStringsToBeEscaped(
-			final List<String> fields) throws IOException {
-		this.writeRecord(fields.stream().map(Field::newEscapedInstance).toList());
-	}
-	
-	/**
-	 * Writes to file the CSV record from a provided array of fields as 
-	 * {@code String}s to be escaped. Fields that contain any double quote 
-	 * characters are properly escaped.
-	 * 
-	 * @param fields a provided array of fields as {@code String}s to be 
-	 * escaped
-	 * 
-	 * @throws IOException if an I/O error occurs.
-	 */
-	public void writeRecordFromStringsToBeEscaped(
-			final String... fields) throws IOException {
-		this.writeRecordFromStringsToBeEscaped(Arrays.asList(fields));
-	}
-
+ 
 }
