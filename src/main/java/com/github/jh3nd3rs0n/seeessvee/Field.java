@@ -1,7 +1,5 @@
 package com.github.jh3nd3rs0n.seeessvee;
 
-import java.util.Objects;
-
 /**
  * A field of a CSV record to be written to file.
  */
@@ -15,7 +13,6 @@ public final class Field {
 	 * @return a new escaped {@code Field}
 	 */
 	public static Field newEscapedInstance(final String field) {
-		Objects.requireNonNull(field);
 		return new Field(String.format("\"%s\"", field.replace("\"", "\"\"")));
 	}
 	
@@ -29,7 +26,6 @@ public final class Field {
 	 * @return a new {@code Field}
 	 */
 	public static Field newInstance(final String field) {
-		Objects.requireNonNull(field);
 		if (field.indexOf('\"') > -1 
 				|| field.indexOf(',') > -1
 				|| field.indexOf('\r') > -1

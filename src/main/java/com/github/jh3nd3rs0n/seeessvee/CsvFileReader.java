@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A CSV file reader.
@@ -71,7 +72,7 @@ public final class CsvFileReader {
 	 * @param rdr the provided {@code Reader}
 	 */
 	public CsvFileReader(final Reader rdr) {
-		this.reader = rdr;
+		this.reader = Objects.requireNonNull(rdr);
 		this.initialize();
 	}
 	

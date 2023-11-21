@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +25,7 @@ public final class CsvFileWriter {
 	 */
 	public CsvFileWriter(final Writer wrtr) {
 		this.lineSeparator = System.getProperty("line.separator");
-		this.writer = wrtr;
+		this.writer = Objects.requireNonNull(wrtr);
 	}
 	
 	/**
