@@ -7,7 +7,7 @@
 	<artifactId>seeessvee</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>SeeEssVee</name>
-	<description>Simple Java library for reading and writing CSV files</description>
+	<description>Simple library for reading and writing CSV files</description>
 	<licenses>
 		<license>
 			<name>MIT License</name>
