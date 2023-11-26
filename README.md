@@ -175,4 +175,4 @@ following path:
 target/seeessvee-VERSION.jar
 ```
 
-Where `VERSION` is the actual version shown within the name of the JAR file.
+`VERSION` is further specified by the name of the actual JAR file.
