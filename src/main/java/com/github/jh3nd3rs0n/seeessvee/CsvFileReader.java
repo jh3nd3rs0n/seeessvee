@@ -16,55 +16,67 @@ public final class CsvFileReader {
      * The provided {@code Reader}.
      */
     private final Reader reader;
+
     /**
      * The current character from the provided {@code Reader}.
      */
     private int chr;
+
     /**
      * The ending index of the escaped text.
      */
     private int escapedTextEndIndex;
+
     /**
      * The starting index of the escaped text.
      */
     private int escapedTextStartIndex;
+
     /**
      * A field of the CSV record.
      */
     private String field;
+
     /**
      * The current index of a field.
      */
     private int index;
+
     /**
      * The boolean value to indicate if the current index of a field is at the
      * end of the escaped text.
      */
     private boolean isAtEndOfEscapedText;
+
     /**
      * The boolean value to indicate if the current index of a field is
      * immediately after the end of the escaped text.
      */
     private boolean isImmediatelyAfterEscapedText;
+
     /**
      * The boolean value to indicate if the current index of a field is within
      * escaped text.
      */
     private boolean isWithinEscapedText;
+
     /**
      * The boolean value to indicate if the current index of a field is within
      * non-escaped text.
      */
     private boolean isWithinNonescapedText;
+
     /**
      * The boolean value to indicate if the current index of a field is within
      * non-escaped text or is immediately after the end of the escaped text.
      */
     private boolean isWithinNonescapedTextOrImmediatelyAfterEscapedText;
+
     /**
      * The line separator.
      */
     private String lineSeparator;
+
     /**
      * The {@code StringBuilder}.
      */
