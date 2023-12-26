@@ -33,26 +33,25 @@ public class App {
 
     public static void main(final String[] args) throws IOException {
         File file = new File("payroll.csv");
-        file.createNewFile();
-        FileWriter fileWriter = new FileWriter(file);
-        try {
+        if (file.createNewFile()) { 
+            throw new IOException("unable to create file: " + file); 
+        }
+        try (FileWriter fileWriter = new FileWriter(file)) {
             CsvFileWriter csvFileWriter = new CsvFileWriter(fileWriter);
             csvFileWriter.writeRecord(
-                EscapeSelection.ESCAPE_ALL,
-                "Last Name", 
-                "First Name", 
-                "Salary");
+                    EscapeSelection.ESCAPE_ALL,
+                    "Last Name",
+                    "First Name",
+                    "Salary");
             csvFileWriter.writeRecord(
-                EscapeSelection.ESCAPE_REQUIRED,
-                "Doe", 
-                "Jane", 
-                "120,000");
+                    EscapeSelection.ESCAPE_REQUIRED,
+                    "Doe",
+                    "Jane",
+                    "120,000");
             csvFileWriter.writeRecord(
-                Field.newInstance("Doe"), 
-                Field.newInstance("John"), 
-                Field.newEscapedInstance("120,000"));
-        } finally {
-            fileWriter.close();
+                    Field.newInstance("Doe"),
+                    Field.newInstance("John"),
+                    Field.newEscapedInstance("120,000"));
         }
         /*
          * payroll.csv:
@@ -62,24 +61,21 @@ public class App {
          * Doe,John,"120,000"
          *
          */
-        FileReader fileReader = new FileReader(file);
-        try {
+        try (FileReader fileReader = new FileReader(file)) {
             CsvFileReader csvFileReader = new CsvFileReader(fileReader);
             List<String> csvRecord = csvFileReader.readRecord();
             System.out.printf(
-                "\"%s\", \"%s\", \"%s\"%n", 
-                csvRecord.get(0), 
-                csvRecord.get(1), 
-                csvRecord.get(2));
-            while ((csvRecord = csvFileReader.readRecord()).size() > 0) {
-                System.out.printf(
-                    "%s, %s, %s%n", 
-                    csvRecord.get(0), 
-                    csvRecord.get(1), 
+                    "\"%s\", \"%s\", \"%s\"%n",
+                    csvRecord.get(0),
+                    csvRecord.get(1),
                     csvRecord.get(2));
+            while (!(csvRecord = csvFileReader.readRecord()).isEmpty()) {
+                System.out.printf(
+                        "%s, %s, %s%n",
+                        csvRecord.get(0),
+                        csvRecord.get(1),
+                        csvRecord.get(2));
             }
-        } finally {
-            fileReader.close();
         }
         /*
          * Standard output:

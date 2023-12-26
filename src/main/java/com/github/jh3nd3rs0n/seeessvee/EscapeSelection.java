@@ -5,10 +5,14 @@ package com.github.jh3nd3rs0n.seeessvee;
  */
 public enum EscapeSelection {
 
-	/** Escape all fields. */
-	ESCAPE_ALL,
-	
-	/** Escape required fields. */
-	ESCAPE_REQUIRED;
-	
+    /**
+     * Escape all fields.
+     */
+    ESCAPE_ALL,
+
+    /**
+     * Escape required fields.
+     */
+    ESCAPE_REQUIRED
+
 }
